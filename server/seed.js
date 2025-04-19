@@ -5,8 +5,8 @@ mongoose.connect('mongodb://localhost:27017/test')
   .then(() => {
     console.log('Connected to MongoDB');
   })
-  .catch(err => {
-    console.error('Error connecting MongoDB:', err);
+  .catch(error => {
+    console.error('Error connecting MongoDB:', error);
   });
 
 const products = [
@@ -15,42 +15,42 @@ const products = [
     color: "white",
     material: "100% cotton",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-    prize: 399
+    price: 399
   },
   {
     productName: "Linen pants",
     color: "beige",
     material: "100% linen",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-    prize: 599
+    price: 599
   },
   {
     productName: "Linen vest",
     color: "beige",
     material: "100% linen",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-    prize: 449
+    price: 449
   },
   {
     productName: "Linen suit jacket",
     color: "beige",
     material: "100% linen",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-    prize: 749
+    price: 749
   },
   {
     productName: "Tank Top",
     color: "navy",
     material: "95% cotton, 5% elastane",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-    prize: 299
+    price: 299
   }, 
   {
     productName: "The Little Black Dress",
     color: "black",
     material: "100% cotton",
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-    prize: 449
+    price: 449
   }
 ];
 
@@ -63,8 +63,8 @@ const seedProducts = async () => {
     console.log('Added mock-products');
 
     mongoose.connection.close();
-  } catch (err) {
-    console.error('Error:', err);
+  } catch (error) {
+    console.error('Error:', error);
   }
 };
 

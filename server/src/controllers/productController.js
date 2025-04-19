@@ -12,13 +12,13 @@ const getAllProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        const { productName, material, availableSizes, prize, color } = req.body;
+        const { productName, material, availableSizes, price, color } = req.body;
 
         const product = new Product({
             productName,
             material,
             availableSizes,
-            prize,
+            price,
             color
         });
 
@@ -45,7 +45,7 @@ const searchProducts = async (req, res) => {
         const products = await Product.find(filter);
 
         res.status(200).json(products);
-    } catch {
+    } catch (error) {
         console.error(error.message);
         res.status(500).send('Server error');
     }

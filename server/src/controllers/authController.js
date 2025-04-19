@@ -33,8 +33,6 @@ const login = async (req, res) => {
         const testPassword = 'yourpassword';
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(testPassword, salt);
-        console.log('Hash created:', hashedPassword);
-        console.log('Comparison result:', await bcrypt.compare(testPassword, hashedPassword));
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
@@ -54,7 +52,7 @@ const login = async (req, res) => {
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
 
-        res.status(200).json({ token })
+        res.status(200).json({ username: user.username, token })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
