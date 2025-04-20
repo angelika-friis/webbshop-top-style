@@ -73,12 +73,12 @@ const addProductToCart = async (req, res) => {
 
 const removeProductFromCart = async (req, res) => {
     const userId = req.user.id;
-    const productId = req.params.productId;
+    const id = req.params.id;
     try {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: 'User not found' });
 
-        user.cart = user.cart.filter(item => item.productId !== productId);
+        user.cart = user.cart.filter(item => item._id.toString() !== id);
         await user.save();
 
         const cartTotal = user.cart.reduce((sum, item) => (
