@@ -11,9 +11,8 @@ const LoginForm = () => {
       e.preventDefault();
       try {
         await login(username, password);
-        alert('Inloggning lyckades!');
       } catch (error) {
-        alert('Fel: ' + error.message);
+        console.log('Error login in: ' + error.message);
       }
     };
 
@@ -21,9 +20,8 @@ const LoginForm = () => {
         e.preventDefault();
         try {
           await register(username, password);
-          alert('Inloggning lyckades!');
         } catch (error) {
-          alert('Fel: ' + error.message);
+          console.log('Error registering user: ' + error.message);
         }
       };
     return (

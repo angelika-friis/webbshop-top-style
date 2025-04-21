@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { getOrder } from '../services/orderService';
 
 const OrderContext = createContext();
 
@@ -11,17 +12,8 @@ export const OrderProvider = ({ children }) => {
 
     const getMyOrder = async () => {
         try {
-            const res = await fetch(`http://localhost:5050/api/orders/mine`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include'
-            });
-
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message);
-
+            const data = await getOrder();
             setOrders(data);
-            console.log(data)
         } catch (error) {
             console.log(error.message);
         }

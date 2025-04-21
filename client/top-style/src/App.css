@@ -2,5 +2,61 @@
   width: 100%;
   max-width: 1280px;
   margin: 0;
-  padding: 2rem;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Gör att hela skärmen fylls även med lite innehåll */
+}
+
+.content-wrap {
+  flex: 1; /* Trycker ner footern */
+}
+
+footer {
+  background-color: #eee;
+  padding: 1rem;
+  text-align: center;
+}
+
+
+a {
+  color: black;
+}
+
+input {
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 0;
+  font-size: 16px;
+  background-color: white;
+  color: black;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px;
+  border: 1px solid black;
+  background-color: black;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  transition: color 0.2s;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #f2f2f2;
+  color: black;
+  border: 1px solid black;
 }

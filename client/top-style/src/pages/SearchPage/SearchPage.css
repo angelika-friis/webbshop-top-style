@@ -1,0 +1,10 @@
+.search-page {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-field {
+    margin-top: 50px;
+    width: 50%;
+    align-self: center;
+}

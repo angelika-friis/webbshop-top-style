@@ -1,66 +1,54 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import {
+  checkLogin,
+  loginUser,
+  registerUser,
+  logoutUser,
+} from '../services/authService';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userErrorMessage, setUserErrorMessage] = useState(null);
 
   useEffect(() => {
-    const checkLogin = async () => {
+    const verifyUser = async () => {
       try {
-        const res = await fetch('http://localhost:5050/api/auth/me', {
-          method: 'GET',
-          credentials: 'include',
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setUser({ username: data.username });
-        } else {
-          setUser(null);
-        }
+        const data = await checkLogin();
+        setUser({ username: data.username });
       } catch (error) {
-        console.error('Kunde inte kontrollera inloggning:', error);
+        console.error(error);
         setUser(null);
       }
     };
-    checkLogin();
+    verifyUser();
   }, []);
 
 
   const login = async (username, password) => {
-    const res = await fetch('http://localhost:5050/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ username, password }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
+    try {
+      const data = await loginUser(username, password);
       setUser({ username: data.username });
-    } else {
-      setUserErrorMessage(data.message);
-      throw new Error(data.message);
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   const register = async (username, password) => {
-    const res = await fetch('http://localhost:5050/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message);
+    try {
+      await registerUser(username, password);
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
-  const logout = () => {
-    setUser(null);
+  const logout = async () => {
+    try {
+      setUser(null);
+      await logoutUser(username, password);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (

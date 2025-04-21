@@ -1,5 +1,13 @@
+.cart-page {
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
 table {
     width: 100%;
+    padding-bottom: 20px;
+    border-bottom: #e0e0e0 1px solid;
 }
 
 .delete-btn {

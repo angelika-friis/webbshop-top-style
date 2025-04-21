@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { getCart, addToCart, removeFromCart, makeOrder } from '../services/cartService';
 
 const CartContext = createContext();
 
@@ -8,13 +9,7 @@ export const CartProvider = ({ children }) => {
 
     const fetchCart = async () => {
         try {
-            const res = await fetch('http://localhost:5050/api/cart', {
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include'
-            });
-            const data = await res.json();
-
-            if (!res.ok) throw new Error(data.message);
+            const data = await getCart();
             setCart(data.cart);
             setCartTotal(data.cartTotal);
         } catch (error) {
@@ -30,15 +25,9 @@ export const CartProvider = ({ children }) => {
 
     const addProductToCart = async (id, size) => {
         try {
-            const res = await fetch(`http://localhost:5050/api/cart`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ productId: id, size })
-            });
-            const data = await res.json();
-
-            if (!res.ok) throw new Error(data.message);
+            const data = await addToCart(id, size);
+            setCart(data.cart);
+            setCartTotal(data.cartTotal);
         } catch (error) {
             console.error(error.message);
         }
@@ -46,15 +35,7 @@ export const CartProvider = ({ children }) => {
 
     const removeProductFromCart = async (id) => {
         try {
-            const res = await fetch(`http://localhost:5050/api/cart/${id}`, {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include'
-            });
-            const data = await res.json();
-
-            if (!res.ok) throw new Error(data.message);
-
+            const data = await removeFromCart(id);
             setCart(data.cart);
             setCartTotal(data.cartTotal);
         } catch (error) {
@@ -64,16 +45,7 @@ export const CartProvider = ({ children }) => {
 
     const checkoutCart = async () => {
         try {
-            const res = await fetch(`http://localhost:5050/api/orders`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include'
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) throw new Error(data.message);
-
+            const data = await makeOrder();
             setCart([]);
             setCartTotal(0);
         } catch (error) {

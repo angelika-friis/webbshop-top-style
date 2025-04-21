@@ -1,5 +1,4 @@
 const OrderItem = ({ item }) => {
-    console.log('item: ', item)
     return (
         <tr className="product-listing" key={item._id}>
             <td>{item.productId.productName}</td>

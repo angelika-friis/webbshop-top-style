@@ -1,15 +1,41 @@
 header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.left-icons,
+nav {
+  display: flex;
+  gap: 1.5rem;
+  min-width: 80px;
+  justify-content: center;
 }
 
 #logo {
-    font-weight: 100;
-    letter-spacing: 2.5px;
-    font-size: 25px;
-    text-transform: uppercase;
-    color: black;
+  font-weight: 300;
+  letter-spacing: 3px;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: black;
+  text-align: center;
+  flex-grow: 1;
+}
+
+header a {
+  color: black;
+  text-decoration: none;
+  font-size: 1.4rem;
+}
+
+.left-icons a,
+nav a {
+  display: flex;
+  align-items: center;
 }

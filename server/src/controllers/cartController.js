@@ -39,12 +39,12 @@ const addProductToCart = async (req, res) => {
         if (!user) return res.status(404).json({ message: 'User not found' });
         if (!product) return res.status(404).json({ message: 'Product not found' });
 
-        const existingItem = user.cart.findIndex(
+        const existingItemIndex = user.cart.findIndex(
             item => item.productId.toString() === productId && item.size === size
         );
 
-        if (existingItem > 0) {
-            user.cart[existingItem].quantity += quantity;
+        if (existingItemIndex >= 0) {
+            user.cart[existingItemIndex].quantity += quantity;
         } else {
             user.cart.push({
                 productId,
@@ -60,9 +60,11 @@ const addProductToCart = async (req, res) => {
 
         await user.save();
 
+        const updatedUser = await User.findById(userId).populate('cart.productId');
+
         res.status(200).json({
             message: 'Product added to cart',
-            cart: user.cart,
+            cart: updatedUser.cart,
             cartTotal
         });
     } catch (error) {

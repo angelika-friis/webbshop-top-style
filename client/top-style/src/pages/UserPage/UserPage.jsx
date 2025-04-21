@@ -1,13 +1,13 @@
 import { useAuth } from '../../context/AuthContext';
 import LoginForm from "../../components/LoginForm/LoginForm";
-import WelcomeMessage from "../../components/WelcomeMessage/WelcomeMessage";
+import UserDashboard from "../../components/UserDashboard/UserDashboard";
 
 const UserPage = () => {
   const { user } = useAuth();
 
   return (
     <div className="user-page">
-      {user ? <WelcomeMessage /> : <LoginForm />}
+      {user ? <UserDashboard /> : <LoginForm />}
     </div>
   );
 };

@@ -13,10 +13,8 @@ const getAllOrders = async (req, res) => {
 
 const getUsersOrders = async (req, res) => {
     const userId = req.user.id;
-    console.log(userId);
     try {
         const order = await Order.find({ user: userId }).populate('products.productId');
-        console.log(order); 
         res.status(200).json(order);
     } catch (error) {
         console.error(error.message);

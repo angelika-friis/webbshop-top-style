@@ -30,27 +30,36 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'User not found' })
         };
 
-        const testPassword = 'yourpassword';
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(testPassword, salt);
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Invalid credentials' })
         }
 
-        const token = jwt.sign(
-            { id: user._id, username: user.username },
-            process.env.JWT_SECRET,
-            { expiresIn: '7d' }
+        const accessToken = jwt.sign(
+            { id: user._id.toString(), username: user.username },
+            process.env.ACCESS_SECRET,
+            { expiresIn: process.env.ACCESS_TOKEN_AGE }
         );
 
-        res.cookie('accessToken', token, {
+        const refreshToken = jwt.sign(
+            { id: user._id.toString(), username: user.username },
+            process.env.REFRESH_SECRET,
+            { expiresIn: process.env.REFRESH_TOKEN_AGE }
+        );
+
+        res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure: false,
             sameSite: 'strict',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+            maxAge: process.env.ACCESS_TOKEN_AGE
+        });
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: process.env.REFRESH_TOKEN_AGE
+        });
 
         res.status(200).json({ username: user.username, token })
     } catch (error) {
@@ -59,4 +68,44 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { registerUser, login };
+const refresh = async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) return res.status(401).json({ message: 'No refresh token' });
+
+    jwt.verify(refreshToken, process.env.REFRESH_SECRET, (error, user) => {
+        if (error) return res.status(403).json({ message: 'Invalid refresh token' });
+
+        const newAccessToken = jwt.sign(
+            { id: user.id, username: user.username },
+            process.env.ACCESS_SECRET,
+            { expiresIn: process.env.ACCESS_TOKEN_AGE }
+        );
+
+        res.cookie('accessToken', newAccessToken, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'strict',
+            maxAge: process.env.ACCESS_TOKEN_AGE
+        });
+
+        res.json({ message: 'Access token refreshed' });
+    })
+}
+
+const logout = async (req, res) => {
+    res.clearCookie('accessToken', {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'strict'
+    });
+    res.clearCookie('refreshToken', {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'strict'
+    });
+    res.status(200).json({ message: 'Logged out and cookie cleared.' });
+}
+
+module.exports = { registerUser, login, refresh, logout };

@@ -3,7 +3,6 @@ import { useOrder } from "../../context/OrderContext";
 
 const OrderPage = () => {
     const { orders } = useOrder();
-    console.log(orders);
     return (
         <div>
             <p>You have successfully placed your order</p>

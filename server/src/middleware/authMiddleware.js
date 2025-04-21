@@ -8,7 +8,11 @@ const requireAuth = (req, res, next) => {
   }
 
   try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+    req.user = {
+      id: decoded.id || decoded._id,
+      username: decoded.username
+    };
     next();
   } catch (error) {
     console.error(error);

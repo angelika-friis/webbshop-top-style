@@ -1,8 +1,19 @@
 #hero {
     width: 100%;
+    height: 300px;
     display: flex;
     justify-content: center;
+    align-content: center;
     background-image: linear-gradient( 92.7deg,  rgba(245,212,212,1) 8.5%, rgba(252,251,224,1) 90.2% );
+    margin: 0;
+}
+
+#hero h1 {
+    align-self: center;
+    text-align: center;
+    font-weight: 300;
+    font-size: 30px;
+    color: white;
 }
 
 #aboutUs {
@@ -10,5 +21,5 @@
     flex-direction: row;
     align-items: center;
     gap: 100px;
-    padding: 70px;
+    padding: 20px 70px;
 }

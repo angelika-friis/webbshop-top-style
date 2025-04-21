@@ -1,17 +1,16 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { getProducts } from '../services/productService';
 
 const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('http://localhost:5050/api/products');
-        const data = await res.json();
-
-        if (!res.ok) throw new Error(data.message);
+        const data = await getProducts();
         setProducts(data);
       } catch (error) {
         setError(error.message);
@@ -21,8 +20,12 @@ export const ProductProvider = ({ children }) => {
     fetchProducts();
   }, []);
 
+  const searchProducts = (condition) => {
+    setSearchResult(products.filter((product) => product.productName.toLowerCase().match(condition.toLowerCase())))
+  }
+
   return (
-    <ProductContext.Provider value={{ products }}>
+    <ProductContext.Provider value={{ products, searchResult, searchProducts }}>
       {children}
     </ProductContext.Provider>
   );
