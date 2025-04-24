@@ -1,6 +1,8 @@
+import './OrderItem.css';
+
 const OrderItem = ({ item }) => {
     return (
-        <tr className="product-listing" key={item._id}>
+        <tr className="order-listing" key={item._id}>
             <td>{item.productId.productName}</td>
             <td>{item.productId.color}</td>
             <td>{item.size}</td>

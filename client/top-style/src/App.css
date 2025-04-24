@@ -1,7 +1,7 @@
 #root {
   width: 100%;
   max-width: 1280px;
-  margin: 0;
+  margin: 0 auto;
 }
 
 html, body {
@@ -12,11 +12,11 @@ html, body {
 .page-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Gör att hela skärmen fylls även med lite innehåll */
+  min-height: 100vh;
 }
 
 .content-wrap {
-  flex: 1; /* Trycker ner footern */
+  flex: 1;
 }
 
 footer {

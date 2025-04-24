@@ -7,7 +7,7 @@ import "./Header.css";
 const Header = () => {
   return (
     <header>
-      <div className="left-icons">
+      <div className="search-icon">
         <Link to="/search">
           <PiMagnifyingGlassLight />
         </Link>

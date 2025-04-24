@@ -61,7 +61,7 @@ const login = async (req, res) => {
             maxAge: process.env.REFRESH_TOKEN_AGE
         });
 
-        res.status(200).json({ username: user.username, token })
+        res.status(200).json({ username: user.username })
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
@@ -94,13 +94,11 @@ const refresh = async (req, res) => {
 
 const logout = async (req, res) => {
     res.clearCookie('accessToken', {
-        path: '/',
         httpOnly: true,
         secure: false,
         sameSite: 'strict'
     });
     res.clearCookie('refreshToken', {
-        path: '/',
         httpOnly: true,
         secure: false,
         sameSite: 'strict'

@@ -23,3 +23,10 @@
     gap: 100px;
     padding: 20px 70px;
 }
+
+@media (max-width: 440px) {
+    #aboutUs {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

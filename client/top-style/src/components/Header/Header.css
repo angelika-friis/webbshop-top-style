@@ -10,21 +10,25 @@ header {
   z-index: 10;
 }
 
-.left-icons,
+
 nav {
   display: flex;
   gap: 1.5rem;
-  min-width: 80px;
   justify-content: center;
+}
+
+.search-icon {
+  min-width: 80px;
 }
 
 #logo {
   font-weight: 300;
   letter-spacing: 3px;
-  font-size: 24px;
+  font-size: 1rem;
   text-transform: uppercase;
   color: black;
   text-align: center;
+  align-self: center;
   flex-grow: 1;
 }
 
@@ -38,4 +42,10 @@ header a {
 nav a {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 450px) {
+  #logo{
+    display: none;
+  }
 }

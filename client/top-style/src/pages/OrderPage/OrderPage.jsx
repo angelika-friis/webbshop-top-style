@@ -1,10 +1,17 @@
-import OrderItem from "../../components/ProductTableRow/ProductTableRow";
+import OrderItem from "../../components/OrderItem/OrderItem";
 import { useOrder } from "../../context/OrderContext";
+import "./OrderPage.css";
+import { useEffect } from "react";
 
 const OrderPage = () => {
-    const { orders } = useOrder();
+    const { orders, getMyOrder } = useOrder();
+
+    useEffect(() => {
+        setTimeout(getMyOrder, 500);
+    }, []);
+
     return (
-        <div>
+        <div className="order-page">
             <p>You have successfully placed your order</p>
             <h2>Order information</h2>
             <table>
