@@ -1,13 +1,21 @@
 import fetchClient from '../api/fetchClient';
 
 export const checkLogin = async () => {
-    const res = await fetchClient('/auth/me', {
-        method: 'GET',
-    });
+    try {
+        const res = await fetchClient('/auth/me', {
+            method: 'GET',
+        });
 
-    if (!res.ok) throw new Error('Not authenticated');
+        if (!res.ok) {
+            return { ok: false };
+        }
 
-    return await res.json();
+        const data = await res.json();
+        return { ok: true, user: data };
+    } catch (err) {
+        console.error("Auth check error:", err);
+        return { ok: false };
+    }
 };
 
 export const loginUser = async (username, password) => {

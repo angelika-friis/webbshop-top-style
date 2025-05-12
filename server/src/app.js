@@ -1,12 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-const cookieParser = require("cookie-parser"); 
+const cookieParser = require("cookie-parser");
 const { connectToDB } = require("./db/mongo");
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const productRoutes = require("./routes/productRoutes");
-const orderRoutes = require("./routes/orderRoutes");
-const cartRoutes = require("./routes/cartRoutes");
+
+const routes = {
+  auth: require("./routes/authRoutes"),
+  user: require("./routes/userRoutes"),
+  products: require("./routes/productRoutes"),
+  orders: require("./routes/orderRoutes"),
+  cart: require("./routes/cartRoutes"),
+};
 
 const app = express();
 
@@ -17,11 +20,9 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/cart", cartRoutes);
+Object.entries(routes).forEach(([path, router]) => {
+  app.use(`/api/${path}`, router);
+});
 
 module.exports = (async () => {
   await connectToDB();

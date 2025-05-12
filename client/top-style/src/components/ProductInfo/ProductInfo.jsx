@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useCart } from '../../context/CartContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const ProductInfo = ({ product, id }) => {
       const { addProductToCart } = useCart();
       const [selectedSize, setSelectedSize] = useState(null);
       const [showConfirmation, setShowConfirmation] = useState(false);
+      const { user } = useAuth();
 
     const chooseSize = (size) => {
         setSelectedSize(size);
@@ -30,7 +32,7 @@ const ProductInfo = ({ product, id }) => {
                     </button>
                 )}
             </div>
-            <button className="cart-btn" onClick={submitToCart}>Add to cart</button>
+            {user && <button className="cart-btn" onClick={submitToCart}>Add to cart</button>}
             {showConfirmation && (
                 <p className='confirmation'>Product added to cart</p>
             )}
